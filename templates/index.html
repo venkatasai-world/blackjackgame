@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BLACKJACK GAME</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .logo {
+      width: 80px;
+      height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    pre.ascii {
+      color: white;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1;
+      margin: 0 auto 1rem;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    .line {
+      height: 2px;
+      background: white;
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    .cards {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    button {
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      background: white;
+      border: none;
+      border-radius: 10px;
+      color: black;
+      margin: 0.4rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #ddd;
+    }
+
+    .result {
+      margin-top: 1.2rem;
+      font-size: 1.3rem;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 🎲 Logo -->
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Casino_font_awesome_white.svg/1024px-Casino_font_awesome_white.svg.png" alt="Casino Logo" />
+
+    <!-- 🂡 ASCII Art -->
+    <pre class="ascii">
+.------.            _     _            _    _            _    
+|A_  _ |.          | |   | |          | |  (_)          | |   
+|( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
+| \  /|K /\  |     | '_ \| |/ _` |/ __| |/ / |/ _` |/ __| |/ /
+|  \/ | /  \ |     | |_) | | (_| | (__|   <| | (_| | (__|   < 
+`-----| \  / |     |_.__/|_|\__,_|\___|_|\_\ |\__,_|\___|_|\_\
+      |  \/ K|                            _/ |                
+      `------'                           |__/           
+    </pre>
+
+    <!-- Game Title -->
+    <h1>BLACKJACK GAME</h1>
+    <div class="line"></div>
+
+    <!-- Only Show After Starting -->
+    {% if your_cards and not result %}
+    <div class="cards">
+      <strong>Your Cards:</strong> {{ your_cards }} (Total: {{ your_total }})<br><br>
+      <strong>Computer Cards:</strong> {{ comp_cards }} (Total: {{ comp_total }})
+    </div>
+    {% endif %}
+
+    <!-- Game Result -->
+    {% if result %}
+      <div class="result">{{ result }}</div>
+      <form method="post">
+        <button type="submit" name="start">Play Again</button>
+      </form>
+    
+    <!-- Main Game Controls -->
+    {% elif not game_over %}
+      <form method="post">
+        {% if your_cards %}
+          <button type="submit" name="hit">Take Card</button>
+          <button type="submit" name="stand">Stand</button>
+        {% else %}
+          <button type="submit" name="start">Start Game</button>
+        {% endif %}
+      </form>
+    
+    <!-- First Load: Start Game -->
+    {% else %}
+      <form method="post">
+        <button type="submit" name="start">Start Game</button>
+      </form>
+    {% endif %}
+  </div>
+</body>
+</html>
